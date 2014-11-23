@@ -15,14 +15,6 @@
 		9E3EBE951A227B51003CCAD9 /* TestBSONDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E3EBE921A227B51003CCAD9 /* TestBSONDocument.m */; };
 		9E3EBE961A227B51003CCAD9 /* TestBSONSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E3EBE931A227B51003CCAD9 /* TestBSONSerialization.m */; };
 		9E3EBE971A227B51003CCAD9 /* TestBSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E3EBE941A227B51003CCAD9 /* TestBSONSerializer.m */; };
-		9E3EBEAA1A227C86003CCAD9 /* BSON_OrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E3EBE9A1A227C86003CCAD9 /* BSON_OrderedDictionary.m */; };
-		9E3EBEAC1A227C86003CCAD9 /* BSONDeserializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E3EBE9F1A227C86003CCAD9 /* BSONDeserializer.m */; };
-		9E3EBEAD1A227C86003CCAD9 /* BSONDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E3EBEA11A227C86003CCAD9 /* BSONDocument.m */; };
-		9E3EBEAE1A227C86003CCAD9 /* BSONSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E3EBEA31A227C86003CCAD9 /* BSONSerialization.m */; };
-		9E3EBEAF1A227C86003CCAD9 /* BSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E3EBEA51A227C86003CCAD9 /* BSONSerializer.m */; };
-		9E3EBEB01A227C86003CCAD9 /* BSONTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E3EBEA71A227C86003CCAD9 /* BSONTypes.m */; };
-		9E3EBEB11A227C86003CCAD9 /* ObjCBSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E3EBEA91A227C86003CCAD9 /* ObjCBSON.m */; };
-		9E3EBEB31A227D37003CCAD9 /* TODO.md in Sources */ = {isa = PBXBuildFile; fileRef = 9E3EBEB21A227D37003CCAD9 /* TODO.md */; };
 		C27981F503326BB640CF15F9 /* libPods-ObjCBSON-experimental.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB672F69A80E38B9E3693FD9 /* libPods-ObjCBSON-experimental.a */; };
 /* End PBXBuildFile section */
 
@@ -43,21 +35,6 @@
 		9E3EBE921A227B51003CCAD9 /* TestBSONDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestBSONDocument.m; sourceTree = "<group>"; };
 		9E3EBE931A227B51003CCAD9 /* TestBSONSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestBSONSerialization.m; sourceTree = "<group>"; };
 		9E3EBE941A227B51003CCAD9 /* TestBSONSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestBSONSerializer.m; sourceTree = "<group>"; };
-		9E3EBE991A227C86003CCAD9 /* BSON_OrderedDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSON_OrderedDictionary.h; sourceTree = "<group>"; };
-		9E3EBE9A1A227C86003CCAD9 /* BSON_OrderedDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSON_OrderedDictionary.m; sourceTree = "<group>"; };
-		9E3EBE9D1A227C86003CCAD9 /* BSON_Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSON_Helper.h; path = ../Pod/Classes/BSON_Helper.h; sourceTree = "<group>"; };
-		9E3EBE9E1A227C86003CCAD9 /* BSONDeserializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSONDeserializer.h; path = ../Pod/Classes/BSONDeserializer.h; sourceTree = "<group>"; };
-		9E3EBE9F1A227C86003CCAD9 /* BSONDeserializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSONDeserializer.m; path = ../Pod/Classes/BSONDeserializer.m; sourceTree = "<group>"; };
-		9E3EBEA01A227C86003CCAD9 /* BSONDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSONDocument.h; path = ../Pod/Classes/BSONDocument.h; sourceTree = "<group>"; };
-		9E3EBEA11A227C86003CCAD9 /* BSONDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSONDocument.m; path = ../Pod/Classes/BSONDocument.m; sourceTree = "<group>"; };
-		9E3EBEA21A227C86003CCAD9 /* BSONSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSONSerialization.h; path = ../Pod/Classes/BSONSerialization.h; sourceTree = "<group>"; };
-		9E3EBEA31A227C86003CCAD9 /* BSONSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSONSerialization.m; path = ../Pod/Classes/BSONSerialization.m; sourceTree = "<group>"; };
-		9E3EBEA41A227C86003CCAD9 /* BSONSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSONSerializer.h; path = ../Pod/Classes/BSONSerializer.h; sourceTree = "<group>"; };
-		9E3EBEA51A227C86003CCAD9 /* BSONSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSONSerializer.m; path = ../Pod/Classes/BSONSerializer.m; sourceTree = "<group>"; };
-		9E3EBEA61A227C86003CCAD9 /* BSONTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSONTypes.h; path = ../Pod/Classes/BSONTypes.h; sourceTree = "<group>"; };
-		9E3EBEA71A227C86003CCAD9 /* BSONTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSONTypes.m; path = ../Pod/Classes/BSONTypes.m; sourceTree = "<group>"; };
-		9E3EBEA81A227C86003CCAD9 /* ObjCBSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjCBSON.h; path = ../Pod/Classes/ObjCBSON.h; sourceTree = "<group>"; };
-		9E3EBEA91A227C86003CCAD9 /* ObjCBSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObjCBSON.m; path = ../Pod/Classes/ObjCBSON.m; sourceTree = "<group>"; };
 		9E3EBEB21A227D37003CCAD9 /* TODO.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = TODO.md; path = ../TODO.md; sourceTree = "<group>"; };
 		C723EEED9AE3314CA99707AD /* Pods-ObjCBSON-experimental.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObjCBSON-experimental.release.xcconfig"; path = "Pods/Target Support Files/Pods-ObjCBSON-experimental/Pods-ObjCBSON-experimental.release.xcconfig"; sourceTree = "<group>"; };
 		CB672F69A80E38B9E3693FD9 /* libPods-ObjCBSON-experimental.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ObjCBSON-experimental.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,20 +68,6 @@
 		6003F581195388D10070C39A = {
 			isa = PBXGroup;
 			children = (
-				9E3EBE981A227C86003CCAD9 /* OrderedDictionary */,
-				9E3EBE9D1A227C86003CCAD9 /* BSON_Helper.h */,
-				9E3EBE9E1A227C86003CCAD9 /* BSONDeserializer.h */,
-				9E3EBE9F1A227C86003CCAD9 /* BSONDeserializer.m */,
-				9E3EBEA01A227C86003CCAD9 /* BSONDocument.h */,
-				9E3EBEA11A227C86003CCAD9 /* BSONDocument.m */,
-				9E3EBEA21A227C86003CCAD9 /* BSONSerialization.h */,
-				9E3EBEA31A227C86003CCAD9 /* BSONSerialization.m */,
-				9E3EBEA41A227C86003CCAD9 /* BSONSerializer.h */,
-				9E3EBEA51A227C86003CCAD9 /* BSONSerializer.m */,
-				9E3EBEA61A227C86003CCAD9 /* BSONTypes.h */,
-				9E3EBEA71A227C86003CCAD9 /* BSONTypes.m */,
-				9E3EBEA81A227C86003CCAD9 /* ObjCBSON.h */,
-				9E3EBEA91A227C86003CCAD9 /* ObjCBSON.m */,
 				60FF7A9C1954A5C5007DD14C /* Podspec Metadata */,
 				6003F5B5195388D20070C39A /* Tests */,
 				6003F58C195388D20070C39A /* Frameworks */,
@@ -165,16 +128,6 @@
 				DE1BCA343BF0390BB60AB50B /* LICENSE */,
 			);
 			name = "Podspec Metadata";
-			sourceTree = "<group>";
-		};
-		9E3EBE981A227C86003CCAD9 /* OrderedDictionary */ = {
-			isa = PBXGroup;
-			children = (
-				9E3EBE991A227C86003CCAD9 /* BSON_OrderedDictionary.h */,
-				9E3EBE9A1A227C86003CCAD9 /* BSON_OrderedDictionary.m */,
-			);
-			name = OrderedDictionary;
-			path = ../Pod/Classes/OrderedDictionary;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -281,18 +234,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9E3EBEB31A227D37003CCAD9 /* TODO.md in Sources */,
-				9E3EBEB01A227C86003CCAD9 /* BSONTypes.m in Sources */,
 				9E3EBE951A227B51003CCAD9 /* TestBSONDocument.m in Sources */,
 				6003F5BC195388D20070C39A /* Tests.m in Sources */,
-				9E3EBEAD1A227C86003CCAD9 /* BSONDocument.m in Sources */,
-				9E3EBEAA1A227C86003CCAD9 /* BSON_OrderedDictionary.m in Sources */,
-				9E3EBEB11A227C86003CCAD9 /* ObjCBSON.m in Sources */,
-				9E3EBEAC1A227C86003CCAD9 /* BSONDeserializer.m in Sources */,
 				9E3EBE961A227B51003CCAD9 /* TestBSONSerialization.m in Sources */,
-				9E3EBEAE1A227C86003CCAD9 /* BSONSerialization.m in Sources */,
 				9E3EBE971A227B51003CCAD9 /* TestBSONSerializer.m in Sources */,
-				9E3EBEAF1A227C86003CCAD9 /* BSONSerializer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
