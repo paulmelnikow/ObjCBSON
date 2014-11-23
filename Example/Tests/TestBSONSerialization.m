@@ -6,36 +6,39 @@
 //  Copyright (c) 2014 Paul Melnikow. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
 #import "BSONSerialization.h"
 
-@interface TestBSONSerialization : XCTestCase
+SpecBegin(BSONSerialization)
 
-@end
+describe(@"BSONSerialization", ^{
+    
+    it(@"serializes and deserializes a simple example", ^{
+        
+        NSDictionary *sample = @{
+            @"one": @1,
+            @"two": @(2.0f),
+            @"three": @"3",
+            @"five": @YES,
+        };
 
-@implementation TestBSONSerialization
+        NSError *error = nil;
+        NSData *data = [BSONSerialization BSONDataWithDictionary:sample error:&error];
+        
+        // Sanity
+        expect(data).notTo.beNil();
+        expect(error).to.beNil();
 
-//- (void) testSimpleExample {
-//    NSDictionary *sample =
-//  @{
-//    @"one": @1,
-//    @"two": @(2.0f),
-//    @"three": @"3",
-//    @"five": @YES,
-//    };
-//    
-//    NSError *error = nil;
-//    NSData *data = [BSONSerialization BSONDataWithDictionary:sample error:&error];
-//    XCTAssertNotNil(data);
-//    XCTAssertNil(error);
-//    
-//    NSDictionary *result = [BSONSerialization dictionaryWithBSONData:data error:&error];
-//    XCTAssertNotNil(result);
-//    XCTAssertNil(error);
-//
-//    XCTAssertEqualObjects(result, sample);
-//}
-//
+        NSDictionary *result = [BSONSerialization dictionaryWithBSONData:data error:&error];
+
+        // Sanity
+        expect(data).notTo.beNil();
+        expect(error).to.beNil();
+        
+        expect(result).to.equal(sample);
+    });
+
+});
+
 //- (void) testArrayExample {
 //    NSDictionary *sample =
 //    @{
@@ -384,4 +387,4 @@
 //    XCTAssertEqualObjects(result, sample);
 //}
 
-@end
+SpecEnd

@@ -221,14 +221,21 @@ describe(@"BSONDocument", ^{
             });
             
         });
+        
+        describe(@"objectid", ^{
+            
+            it(@"should raise exception on nil", ^{
+                expect(^{
+                    [document appendObjectID:nil forKey:@"testKey"];
+                }).to.raise(@"NSInvalidArgumentException");
+            });
 
-        //    // BSONObjectID
-        //    BSONObjectID *objectID = nil;
-        //    XCTAssertThrows([document appendObjectID:objectID forKey:@"testKey"]);
-        //
-        //    objectID = [BSONObjectID objectID];
-        //    XCTAssertNoThrow([document appendObjectID:objectID forKey:@"testKey"]);
-        //
+            it(@"should append non-nil objectid", ^{
+                [document appendObjectID:[BSONObjectID objectID] forKey:@"testKey"];
+            });
+
+        });
+
         //    // BSONSymbol
         //    BSONSymbol *symbol = nil;
         //    XCTAssertThrows([document appendSymbol:symbol forKey:@"testKey"]);
