@@ -183,27 +183,45 @@ describe(@"BSONDocument", ^{
             });
             
         });
+        
+        describe(@"dbref", ^{
+            
+            it(@"should raise exception on nil", ^{
+                expect(^{
+                    [document appendDatabasePointer:nil forKey:@"testKey"];
+                }).to.raise(@"NSInvalidArgumentException");
+            });
 
-        //    // BSONDatabasePointer
-        //    BSONDatabasePointer *dbPointer = nil;
-        //    XCTAssertThrows([document appendDatabasePointer:dbPointer forKey:@"testKey"]);
-        //
-        //    dbPointer = [[BSONDatabasePointer alloc] init];
-        //    XCTAssertThrows([document appendDatabasePointer:dbPointer forKey:@"testKey"]);
-        //
-        //    dbPointer = [[BSONDatabasePointer alloc] init];
-        //    dbPointer.collection = @"ponies";
-        //    XCTAssertThrows([document appendDatabasePointer:dbPointer forKey:@"testKey"]);
-        //
-        //    dbPointer = [[BSONDatabasePointer alloc] init];
-        //    dbPointer.objectID = [BSONObjectID objectID];
-        //    XCTAssertThrows([document appendDatabasePointer:dbPointer forKey:@"testKey"]);
-        //
-        //    dbPointer = [[BSONDatabasePointer alloc] init];
-        //    dbPointer.collection = @"ponies";
-        //    dbPointer.objectID = [BSONObjectID objectID];
-        //    XCTAssertNoThrow([document appendDatabasePointer:dbPointer forKey:@"testKey"]);
-        //
+            it(@"should raise exception on nil objectid", ^{
+                BSONDatabasePointer *dbPointer = [[BSONDatabasePointer alloc] init];
+                dbPointer.collection = @"ponies";
+                
+                expect(^{
+                    [document appendDatabasePointer:dbPointer forKey:@"testKey"];
+                }).to.raise(@"NSInvalidArgumentException");
+            });
+            
+            it(@"should raise exception on nil collection", ^{
+                BSONDatabasePointer *dbPointer = [[BSONDatabasePointer alloc] init];
+                dbPointer.objectID = [BSONObjectID objectID];
+                
+                expect(^{
+                    [document appendDatabasePointer:dbPointer forKey:@"testKey"];
+                }).to.raise(@"NSInvalidArgumentException");
+            });
+
+            it(@"should append with collection and objectid", ^{
+                BSONDatabasePointer *dbPointer = [[BSONDatabasePointer alloc] init];
+                dbPointer.collection = @"ponies";
+                dbPointer.objectID = [BSONObjectID objectID];
+                
+                expect(^{
+                    [document appendDatabasePointer:dbPointer forKey:@"testKey"];
+                }).to.raise(@"NSInvalidArgumentException");
+            });
+            
+        });
+
         //    // BSONObjectID
         //    BSONObjectID *objectID = nil;
         //    XCTAssertThrows([document appendObjectID:objectID forKey:@"testKey"]);
