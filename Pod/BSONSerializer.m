@@ -70,31 +70,59 @@
     }
     
     switch (*(number.objCType)) {
-        case 'd':
-        case 'f':
+        case 'f': // float
+        case 'd': // double
             return [self.document appendDouble:number.doubleValue forKey:key];
-        case 'l':
-        case 'L':
-        case 'q':
-            return [self.document appendInt64:number.integerValue forKey:key];
-        case 'Q':
-            if ((uint64_t)number.unsignedIntegerValue > INT64_MAX) {
+        case 'l': // long
+            if (number.longValue > INT64_MAX) {
+                if (error) {
+                    NSDictionary *userInfo = @{ NSLocalizedDescriptionKey: @"Signed integer value overflows BSON integer capacity" };
+                    *error = [NSError errorWithDomain:BSONErrorDomain code:BSONIntegerOverflow userInfo:userInfo];
+                }
+                return NO;
+            }
+            return [self.document appendInt64:number.longValue forKey:key];
+        case 'L': // unsigned long
+            if (number.unsignedLongValue > INT64_MAX) {
                 if (error) {
                     NSDictionary *userInfo = @{ NSLocalizedDescriptionKey: @"Unsigned integer value overflows BSON signed integer capacity" };
                     *error = [NSError errorWithDomain:BSONErrorDomain code:BSONIntegerOverflow userInfo:userInfo];
                 }
                 return NO;
             }
-            return [self.document appendInt64:number.integerValue forKey:key];
-        case 'B': // C++/C99 bool
+            return [self.document appendInt64:number.unsignedLongValue forKey:key];
+        case 'q': // long long
+            if (number.longLongValue > INT64_MAX) {
+                if (error) {
+                    NSDictionary *userInfo = @{ NSLocalizedDescriptionKey: @"Signed integer value overflows BSON integer capacity" };
+                    *error = [NSError errorWithDomain:BSONErrorDomain code:BSONIntegerOverflow userInfo:userInfo];
+                }
+                return NO;
+            }
+            return [self.document appendInt64:number.longLongValue forKey:key];
+        case 'Q': // unsigned long long
+            if (number.unsignedLongLongValue > INT64_MAX) {
+                if (error) {
+                    NSDictionary *userInfo = @{ NSLocalizedDescriptionKey: @"Unsigned integer value overflows BSON signed integer capacity" };
+                    *error = [NSError errorWithDomain:BSONErrorDomain code:BSONIntegerOverflow userInfo:userInfo];
+                }
+                return NO;
+            }
+            return [self.document appendInt64:number.unsignedLongLongValue forKey:key];
+        case 'B': // C++ bool / C99 _Bool
             return [self.document appendBool:number.boolValue forKey:key];
-        case 'c': // Used for ObjC numberWithBool: but also numberWithChar:
-        case 'C':
-        case 's':
-        case 'S':
-        case 'i':
-        case 'I':
+        case 'c': // char. Used for ObjC numberWithChar:, and also for numberWithBool: which we handle above
+            return [self.document appendInt32:number.charValue forKey:key];
+        case 'C': // unsigned char
+            return [self.document appendInt32:number.unsignedCharValue forKey:key];
+        case 's': // short
+            return [self.document appendInt32:number.shortValue forKey:key];
+        case 'S': // unsigned short
+            return [self.document appendInt32:number.unsignedShortValue forKey:key];
+        case 'i': // int
             return [self.document appendInt32:number.intValue forKey:key];
+        case 'I': // unsigned int
+            return [self.document appendInt64:number.unsignedIntValue forKey:key];
         default:
             [NSException raise:NSInvalidArgumentException format:@"Unexpected objCType: %s", number.objCType];
             return NO;
