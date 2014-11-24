@@ -233,35 +233,75 @@ describe(@"BSONDocument", ^{
             });
 
         });
+        
+        describe(@"symbol", ^{
+            
+            it(@"should raise exception on nil", ^{
+                expect(^{
+                    [document appendSymbol:nil forKey:@"testKey"];
+                }).to.raise(@"NSInvalidArgumentException");
+            });
+            
+            it(@"should raise exception on nil symbol", ^{
+                BSONSymbol *symbol = [[BSONSymbol alloc] init];
+                
+                expect(^{
+                    [document appendSymbol:symbol forKey:@"testKey"];
+                }).to.raise(@"NSInvalidArgumentException");
+            });
+            
+            it(@"should append with symbol", ^{
+                BSONSymbol *symbol = [[BSONSymbol alloc] init];
+                symbol.symbol = @"example_symbol";
+                
+                [document appendSymbol:symbol forKey:@"testKey"];
+            });
+            
+        });
+        
+        describe(@"timestamp", ^{
+            
+            it(@"should raise exception on nil", ^{
+                expect(^{
+                    [document appendTimestamp:nil forKey:@"testKey"];
+                }).to.raise(@"NSInvalidArgumentException");
+            });
+            
+            it(@"should append non-nil timestamp", ^{
+                [document appendTimestamp:[[BSONTimestamp alloc] init] forKey:@"testKey"];
+            });
+            
+        });
 
-        //    // BSONSymbol
-        //    BSONSymbol *symbol = nil;
-        //    XCTAssertThrows([document appendSymbol:symbol forKey:@"testKey"]);
-        //
-        //    symbol = [[BSONSymbol alloc] init];
-        //    XCTAssertThrows([document appendSymbol:symbol forKey:@"testKey"]);
-        //
-        //    symbol = [[BSONSymbol alloc] init];
-        //    symbol.symbol = @"a symbol";
-        //    XCTAssertNoThrow([document appendSymbol:symbol forKey:@"testKey"]);
-        //
-        //    // BSONTimestamp
-        //    BSONTimestamp *timestamp = nil;
-        //    XCTAssertThrows([document appendTimestamp:timestamp forKey:@"testKey"]);
-        //
-        //    timestamp = [[BSONTimestamp alloc] init];
-        //    XCTAssertNoThrow([document appendTimestamp:timestamp forKey:@"testKey"]);
-        //
-        //    // minkey, maxkey, null, undefined
-        //    XCTAssertNoThrow([document appendMinKeyForKey:@"testKey"]);
-        //    XCTAssertNoThrow([document appendMaxKeyForKey:@"testKey"]);
-        //    XCTAssertNoThrow([document appendNullForKey:@"testKey"]);
-        //    XCTAssertNoThrow([document appendUndefinedForKey:@"testKey"]);
-        //    
-        //    // Embedded document
-        //    XCTAssertThrows([document appendEmbeddedDocument:nil forKey:@"testKey"]);
-        //    XCTAssertNoThrow([document appendEmbeddedDocument:[BSONDocument document] forKey:@"testKey"]);
-        //}
+        it(@"should append minkey", ^{
+            [document appendMinKeyForKey:@"testKey"];
+        });
+
+        it(@"should append maxkey", ^{
+            [document appendMaxKeyForKey:@"testKey"];
+        });
+
+        it(@"should append null", ^{
+            [document appendNullForKey:@"testKey"];
+        });
+
+        it(@"should append undefined", ^{
+            [document appendUndefinedForKey:@"testKey"];
+        });
+
+    });
+    
+    describe(@"appending embedded document", ^{
+        
+        it(@"should raise exception on nil", ^{
+            expect(^{
+                [document appendEmbeddedDocument:nil forKey:@"testKey"];
+            }).to.raise(@"NSInvalidArgumentException");
+        });
+        
+        it(@"should append non-nil document", ^{
+            [document appendEmbeddedDocument:[BSONDocument document] forKey:@"testKey"];
+        });
         
     });
     
