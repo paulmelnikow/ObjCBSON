@@ -31,6 +31,9 @@
     if (![value isKindOfClass:[cls class]]) \
         [NSException raise:NSInvalidArgumentException format:@"Value is the wrong type"];
 
+#define bson_raise_if_finalized(obj) \
+    if (obj.finalized) [NSException raise:NSInternalInconsistencyException format:@"Object is finalized"];
+
 static inline NSComparisonResult bson_NSComparisonResultFromQsort (int result) {
     if (result < 0)
         return NSOrderedAscending;

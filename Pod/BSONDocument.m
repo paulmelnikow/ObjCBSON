@@ -41,9 +41,13 @@
 
 @interface BSONDocument ()
 @property (assign) bson_t *_bson;
+@property (assign) BOOL finalized;
 @end
 
-@implementation BSONDocument
+@implementation BSONDocument {
+    const uint8_t *_bytes;
+    size_t _length;
+}
 
 - (id) init {
     if (self = [super init]) {
@@ -69,9 +73,10 @@
             self.inData = data;
         else
             self.inData = [data isKindOfClass:[NSMutableData class]] ? [NSData dataWithData:data] : data;
-        self._bson = bson_new();
-        if (!bson_init_static(self._bson, self.inData.bytes, (uint32_t)self.inData.length)) {
-            bson_destroy(self._bson);
+        _bytes = self.inData.bytes;
+        _length = self.inData.length;
+        self._bson = bson_new_from_buffer((uint8_t **)&_bytes, &_length, NULL, NULL);
+        if (!self._bson) {
             return self = nil;
         }
     }
@@ -109,10 +114,6 @@
     }
 }
 
-- (void) invalidate {
-    self._bson = NULL;
-}
-
 #pragma mark -
 
 - (instancetype) copy {
@@ -140,12 +141,11 @@
 
 - (NSData *) dataValue {
     if (self.inData) return self.inData;
-    return [NSData dataWithBytes:(void *)bson_get_data(self._bson) length:self._bson->len];
-}
-
-- (NSData *) dataValueNoCopy {
-    if (self.inData) return self.inData;
-    return [NSData dataWithBytesNoCopy:(void *)bson_get_data(self._bson) length:self._bson->len];
+    uint32_t length;
+    uint8_t * bytes = bson_destroy_with_steal(self._bson, true, &length);
+    self._bson = NULL;
+    self.finalized = YES;
+    return [NSData dataWithBytesNoCopy:bytes length:length freeWhenDone:YES];
 }
 
 - (NSString *) description {
@@ -184,6 +184,7 @@
 }
 
 - (BOOL) appendData:(NSData *) value forKey:(NSString *) key {
+    bson_raise_if_finalized(self);
     bson_raise_if_value_is_not_instance_of_class(NSData);
     if (value.length > UINT32_MAX) [NSException raise:NSInvalidArgumentException format:@"Data is too long"];
     bson_raise_if_key_nil_or_too_long();
@@ -191,11 +192,13 @@
 }
 
 - (BOOL) appendBool:(BOOL) value forKey:(NSString *) key {
+    bson_raise_if_finalized(self);
     bson_raise_if_key_nil_or_too_long();
     return BSON_APPEND_BOOL(self._bson, key.UTF8String, value);
 }
 
 - (BOOL) appendCode:(BSONCode *) value forKey:(NSString *) key {
+    bson_raise_if_finalized(self);
     bson_raise_if_value_is_not_instance_of_class(BSONCode);
     bson_raise_if_nil(value.code)
     bson_raise_if_key_nil_or_too_long();
@@ -203,6 +206,7 @@
 }
 
 - (BOOL) appendCodeWithScope:(BSONCodeWithScope *) value forKey:(NSString *) key {
+    bson_raise_if_finalized(self);
     bson_raise_if_value_is_not_instance_of_class(BSONCodeWithScope);
     bson_raise_if_nil(value.code);
     bson_raise_if_nil(value.scope);
@@ -211,6 +215,7 @@
 }
 
 - (BOOL) appendDatabasePointer:(BSONDatabasePointer *) value forKey:(NSString *) key {
+    bson_raise_if_finalized(self);
     bson_raise_if_value_is_not_instance_of_class(BSONDatabasePointer);
     bson_raise_if_nil(value.collection);
     bson_raise_if_nil(value.objectID);
@@ -222,42 +227,50 @@
 }
 
 - (BOOL) appendDouble:(double) value forKey:(NSString *) key {
+    bson_raise_if_finalized(self);
     bson_raise_if_key_nil_or_too_long();
     return BSON_APPEND_DOUBLE(self._bson, key.UTF8String, value);
 }
 
 - (BOOL) appendEmbeddedDocument:(BSONDocument *) value forKey:(NSString *) key {
+    bson_raise_if_finalized(self);
     bson_raise_if_value_is_not_instance_of_class(BSONDocument);
     bson_raise_if_key_nil_or_too_long();
     return BSON_APPEND_DOCUMENT(self._bson, key.UTF8String, value.nativeValue);
 }
 
 - (BOOL) appendInt32:(int32_t) value forKey:(NSString *) key {
+    bson_raise_if_finalized(self);
     bson_raise_if_key_nil_or_too_long();
     return BSON_APPEND_INT32(self._bson, key.UTF8String, value);
 }
 
 - (BOOL) appendInt64:(int64_t) value forKey:(NSString *) key {
+    bson_raise_if_finalized(self);
     bson_raise_if_key_nil_or_too_long();
     return BSON_APPEND_INT64(self._bson, key.UTF8String, value);
 }
 
 - (BOOL) appendMinKeyForKey:(NSString *) key {
+    bson_raise_if_finalized(self);
     bson_raise_if_key_nil_or_too_long();
     return BSON_APPEND_MINKEY(self._bson, key.UTF8String);
 }
 
 - (BOOL) appendMaxKeyForKey:(NSString *) key {
+    bson_raise_if_finalized(self);
     bson_raise_if_key_nil_or_too_long();
     return BSON_APPEND_MAXKEY(self._bson, key.UTF8String);
 }
 
 - (BOOL) appendNullForKey:(NSString *) key {
+    bson_raise_if_finalized(self);
     bson_raise_if_key_nil_or_too_long();
     return BSON_APPEND_NULL(self._bson, key.UTF8String);
 }
 
 - (BOOL) appendObjectID:(BSONObjectID *) value forKey:(NSString *) key {
+    bson_raise_if_finalized(self);
     bson_raise_if_value_is_not_instance_of_class(BSONObjectID);
     bson_raise_if_key_nil_or_too_long();
     bson_oid_t objectIDNative = value.nativeValue;
@@ -265,6 +278,7 @@
 }
 
 - (BOOL) appendRegularExpression:(BSONRegularExpression *) value forKey:(NSString *) key {
+    bson_raise_if_finalized(self);
     bson_raise_if_value_is_not_instance_of_class(BSONRegularExpression);
     bson_raise_if_nil(value.pattern);
     bson_raise_if_key_nil_or_too_long();
@@ -272,6 +286,7 @@
 }
 
 - (BOOL) appendString:(NSString *) value forKey:(NSString *) key {
+    bson_raise_if_finalized(self);
     bson_raise_if_value_is_not_instance_of_class(NSString);
     bson_raise_if_string_too_long(value, @"Value is too long");
     bson_raise_if_key_nil_or_too_long();
@@ -279,6 +294,7 @@
 }
 
 - (BOOL) appendSymbol:(BSONSymbol *) value forKey:(NSString *) key {
+    bson_raise_if_finalized(self);
     bson_raise_if_value_is_not_instance_of_class(BSONSymbol);
     bson_raise_if_nil(value.symbol);
     bson_raise_if_string_too_long(value.symbol, @"Value is too long");
@@ -287,6 +303,7 @@
 }
 
 - (BOOL) appendDate:(NSDate *) value forKey:(NSString *) key {
+    bson_raise_if_finalized(self);
     bson_raise_if_value_is_not_instance_of_class(NSDate);
     bson_raise_if_key_nil_or_too_long();
     int64_t millis = 1000.f * [value timeIntervalSince1970];
@@ -294,12 +311,14 @@
 }
 
 - (BOOL) appendTimestamp:(BSONTimestamp *) value forKey:(NSString *) key {
+    bson_raise_if_finalized(self);
     bson_raise_if_value_is_not_instance_of_class(BSONTimestamp);
     bson_raise_if_key_nil_or_too_long();
     return BSON_APPEND_TIMESTAMP(self._bson, key.UTF8String, value.timeInSeconds, value.increment);
 }
 
 - (BOOL) appendUndefinedForKey:(NSString *) key {
+    bson_raise_if_finalized(self);
     bson_raise_if_key_nil_or_too_long();
     return BSON_APPEND_UNDEFINED(self._bson, key.UTF8String);
 }

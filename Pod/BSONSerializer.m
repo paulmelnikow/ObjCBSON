@@ -22,7 +22,6 @@
 @interface BSONDocument (Module)
 - (const bson_t *) nativeValue;
 - (id) initWithNativeValue:(bson_t *) bson;
-- (void) invalidate;
 @end
 
 @implementation BSONSerializer
@@ -147,7 +146,6 @@
     }
     
     bson_append_document_end(self.nativeValue, &child);
-    [childSerializer.document invalidate];
     return success;
 }
 
@@ -170,7 +168,6 @@
     }
     
     bson_append_array_end(self.nativeValue, &child);
-    [childSerializer.document invalidate];
     return success;
 }
 
