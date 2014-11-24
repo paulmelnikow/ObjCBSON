@@ -12,379 +12,524 @@ SpecBegin(BSONSerialization)
 
 describe(@"BSONSerialization", ^{
     
-    it(@"serializes and deserializes a simple example", ^{
+    sharedExamplesFor(@"serializes and deserializes", ^(NSDictionary *data) {
         
-        NSDictionary *sample = @{
-            @"one": @1,
-            @"two": @(2.0f),
-            @"three": @"3",
-            @"five": @YES,
-        };
-
-        NSError *error = nil;
-        NSData *data = [BSONSerialization BSONDataWithDictionary:sample error:&error];
+        id obj = data[@"object"];
         
-        // Sanity
-        expect(data).notTo.beNil();
-        expect(error).to.beNil();
-
-        NSDictionary *result = [BSONSerialization dictionaryWithBSONData:data error:&error];
-
-        // Sanity
-        expect(data).notTo.beNil();
-        expect(error).to.beNil();
+        it(@"should serialize and deserialize", ^{
+            
+            NSError *error = nil;
+            NSData *data = [BSONSerialization BSONDataWithDictionary:obj error:&error];
+            
+            // Sanity
+            expect(data).notTo.beNil();
+            expect(error).to.beNil();
+            
+            NSDictionary *result = [BSONSerialization dictionaryWithBSONData:data error:&error];
+            
+            // Sanity
+            expect(data).notTo.beNil();
+            expect(error).to.beNil();
+            
+            expect(result).to.equal(obj);
+            
+        });
         
-        expect(result).to.equal(sample);
+    });
+    
+    itShouldBehaveLike(@"serializes and deserializes",
+        @{
+            @"object": @{
+                @"one": @1,
+                @"two": @(2.0f),
+                @"three": @"3",
+                @"five": @YES,
+            },
+        });
+    
+    itShouldBehaveLike(@"serializes and deserializes",
+        @{
+            @"object": @{
+                @"four": @[ @"zero", @"one", @"two", @"three" ],
+            },
+        });
+
+    itShouldBehaveLike(@"serializes and deserializes",
+        @{
+            @"object": @{
+                @"one": @1,
+                @"two": @(2.0f),
+                @"three": @"3",
+                @"five": @YES,
+            },
+        });
+    
+    sharedExamplesFor(@"serializes and deserializes value", ^(NSDictionary *data) {
+        
+        id value = data[@"value"];
+        
+        it(@"should serialize and deserialize", ^{
+            
+            NSDictionary *obj = @{@"testKey": value};
+            
+            NSError *error = nil;
+            NSData *data = [BSONSerialization BSONDataWithDictionary:obj error:&error];
+            
+            // Sanity
+            expect(data).notTo.beNil();
+            expect(error).to.beNil();
+            
+            NSDictionary *result = [BSONSerialization dictionaryWithBSONData:data error:&error];
+            
+            // Sanity
+            expect(data).notTo.beNil();
+            expect(error).to.beNil();
+            
+            expect([result objectForKey:@"testKey"]).to.equal(value);
+            
+        });
+        
+    });
+    
+    itShouldBehaveLike(@"serializes and deserializes value",
+        @{
+            @"value": @"test string",
+        });
+
+    sharedExamplesFor(@"serializes and deserializes number", ^(NSDictionary *data) {
+        
+        id number = data[@"number"];
+        NSString *inType = data[@"inType"];
+        NSString *outType = data[@"outType"];
+        
+        it(@"should serialize and deserialize", ^{
+            
+            expect(number).to.haveObjCType([inType UTF8String]);
+            
+            NSDictionary *obj = @{@"testKey": number};
+            
+            NSError *error = nil;
+            NSData *data = [BSONSerialization BSONDataWithDictionary:obj error:&error];
+            
+            // Sanity
+            expect(data).notTo.beNil();
+            expect(error).to.beNil();
+            
+            NSDictionary *result = [BSONSerialization dictionaryWithBSONData:data error:&error];
+            
+            // Sanity
+            expect(data).notTo.beNil();
+            expect(error).to.beNil();
+            
+            NSNumber *resultNumber = [result objectForKey:@"testKey"];
+            
+            expect(resultNumber).to.equal(number);
+            expect(resultNumber).to.haveObjCType([outType UTF8String]);
+            
+        });
+        
+    });
+    
+    describe(@"booleans", ^{
+    
+        itShouldBehaveLike(@"serializes and deserializes number",
+                           @{
+                             @"number": @YES,
+                             @"inType": @"c",
+                             @"outType": @"c",
+                             });
+        
+        itShouldBehaveLike(@"serializes and deserializes number",
+                           @{
+                             @"number": (id)kCFBooleanTrue,
+                             @"inType": @"c",
+                             @"outType": @"c",
+                             });
+        
+    });
+    
+    describe(@"numberWithChar", ^{
+    
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithChar:-42],
+                @"inType": @"c",
+                @"outType": @"i",
+            });
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithChar:CHAR_MIN],
+                @"inType": @"c",
+                @"outType": @"i",
+            });
+        
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithChar:CHAR_MAX],
+                @"inType": @"c",
+                @"outType": @"i",
+            });
+    });
+    
+    describe(@"numberWithDouble", ^{
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithDouble:-42.5],
+                @"inType": @"d",
+                @"outType": @"d",
+            });
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithDouble:DBL_MIN],
+                @"inType": @"d",
+                @"outType": @"d",
+            });
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithDouble:DBL_MAX],
+                @"inType": @"d",
+                @"outType": @"d",
+            });
+        
+    });
+    
+    describe(@"numberWithFloat", ^{
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithFloat:-42.5],
+                @"inType": @"f",
+                @"outType": @"d",
+            });
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithFloat:FLT_MIN],
+                @"inType": @"f",
+                @"outType": @"d",
+            });
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithFloat:FLT_MAX],
+                @"inType": @"f",
+                @"outType": @"d",
+            });
+        
+    });
+    
+    describe(@"numberWithInt", ^{
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithInt:-42],
+                @"inType": @"i",
+                @"outType": @"i",
+            });
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithInt:INT_MAX],
+                @"inType": @"i",
+                @"outType": @"i",
+            });
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithInt:INT_MIN],
+                @"inType": @"i",
+                @"outType": @"i",
+            });
+        
+    });
+    
+    describe(@"numberWithInteger", ^{
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithInteger:42],
+                @"inType": @"q", // "q" == long
+                @"outType": @"q",
+            });
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithInteger:NSIntegerMax],
+                @"inType": @"q", // "q" == long
+                @"outType": @"q",
+            });
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithInteger:NSIntegerMin],
+                @"inType": @"q", // "q" == long
+                @"outType": @"q",
+            });
+        
+    });
+    
+    describe(@"numberWithLong", ^{
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithLong:42],
+                @"inType": @"q", // "q" == long
+                @"outType": @"q",
+            });
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithLong:LONG_MAX],
+                @"inType": @"q", // "q" == long
+                @"outType": @"q",
+            });
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithLong:LONG_MIN],
+                @"inType": @"q", // "q" == long
+                @"outType": @"q",
+            });
+    
+    });
+    
+    describe(@"numberWithLongLong", ^{
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithLongLong:42],
+                @"inType": @"q", // "q" == long
+                @"outType": @"q",
+            });
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithLongLong:LONG_LONG_MAX],
+                @"inType": @"q", // "q" == long
+                @"outType": @"q",
+            });
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithLongLong:LONG_LONG_MIN],
+                @"inType": @"q", // "q" == long
+                @"outType": @"q",
+            });
+    
+    });
+    
+    describe(@"numberWithShort", ^{
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithShort:42],
+                @"inType": @"s", // "s" == short
+                @"outType": @"i",
+            });
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithShort:SHRT_MAX],
+                @"inType": @"s", // "s" == short
+                @"outType": @"i",
+            });
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithShort:SHRT_MIN],
+                @"inType": @"s", // "s" == short
+                @"outType": @"i",
+            });
+    
+    });
+    
+    describe(@"numberWithUnsignedChar", ^{
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithUnsignedChar:42],
+                @"inType": @"s", // "s" == short
+                @"outType": @"i",
+            });
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithUnsignedChar:UCHAR_MAX],
+                @"inType": @"s", // "s" == short
+                @"outType": @"i",
+            });
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithUnsignedChar:0],
+                @"inType": @"s", // "s" == short
+                @"outType": @"i",
+            });
+    
+    });
+    
+    describe(@"numberWithUnsignedInt", ^{
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithUnsignedInt:42],
+                @"inType": @"q", // "q" == long
+                @"outType": @"q",
+            });
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithUnsignedInt:UINT_MAX],
+                @"inType": @"q", // "q" == long
+                @"outType": @"q",
+            });
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithUnsignedInt:0],
+                @"inType": @"q", // "q" == long
+                @"outType": @"q",
+            });
+        
+    });
+
+    sharedExamplesFor(@"overflow BSON signed capacity", ^(NSDictionary *data) {
+        
+        NSNumber *number = data[@"number"];
+        
+        it(@"should overflow", ^{
+            
+            NSDictionary *obj = @{@"testKey": number};
+            
+            NSError *error = nil;
+            NSData *data = [BSONSerialization BSONDataWithDictionary:obj error:&error];
+            
+            expect(data).to.beNil();
+            expect([error localizedDescription]).to.equal(@"Unsigned integer value overflows BSON signed integer capacity");
+            
+        });
+        
+    });
+    
+    describe(@"numberWithUnsignedInteger", ^{
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithUnsignedInteger:42],
+                @"inType": @"q", // "s" == long
+                @"outType": @"q",
+            });
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithUnsignedInteger:NSIntegerMax],
+                @"inType": @"q", // "s" == long
+                @"outType": @"q",
+            });
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithUnsignedInteger:0],
+                @"inType": @"q", // "s" == long
+                @"outType": @"q",
+            });
+        
+        itShouldBehaveLike(@"overflow BSON signed capacity",
+            @{
+                @"number": [NSNumber numberWithUnsignedInteger:NSIntegerMax + 1],
+            });
+        
+    });
+    
+    describe(@"numberWithUnsignedLong", ^{
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithUnsignedLong:42],
+                @"inType": @"q", // "s" == long
+                @"outType": @"q",
+            });
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithUnsignedLong:LONG_MAX],
+                @"inType": @"q", // "s" == long
+                @"outType": @"q",
+            });
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithUnsignedLong:0],
+                @"inType": @"q", // "s" == long
+                @"outType": @"q",
+            });
+        
+        itShouldBehaveLike(@"overflow BSON signed capacity",
+            @{
+                @"number": [NSNumber numberWithUnsignedLong:LONG_MAX + 1],
+            });
+        
+    });
+    
+    describe(@"numberWithUnsignedLongLong", ^{
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithUnsignedLongLong:42],
+                @"inType": @"q", // "s" == long
+                @"outType": @"q",
+            });
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithUnsignedLongLong:LONG_LONG_MAX],
+                @"inType": @"q", // "s" == long
+                @"outType": @"q",
+            });
+
+        itShouldBehaveLike(@"serializes and deserializes number",
+            @{
+                @"number": [NSNumber numberWithUnsignedLongLong:0],
+                @"inType": @"q", // "s" == long
+                @"outType": @"q",
+            });
+        
+        itShouldBehaveLike(@"overflow BSON signed capacity",
+            @{
+                @"number": [NSNumber numberWithUnsignedLongLong:LONG_LONG_MAX + 1],
+            });
+        
+    });
+
+    describe(@"numberWithUnsignedShort", ^{
+        
+        itShouldBehaveLike(@"serializes and deserializes number",
+                           @{
+                             @"number": [NSNumber numberWithUnsignedShort:42],
+                             @"inType": @"i",
+                             @"outType": @"i",
+                             });
+        
+        itShouldBehaveLike(@"serializes and deserializes number",
+                           @{
+                             @"number": [NSNumber numberWithUnsignedShort:USHRT_MAX],
+                             @"inType": @"i",
+                             @"outType": @"i",
+                             });
+        
+        itShouldBehaveLike(@"serializes and deserializes number",
+                           @{
+                             @"number": [NSNumber numberWithUnsignedShort:0],
+                             @"inType": @"i",
+                             @"outType": @"i",
+                             });
+        
     });
 
 });
-
-//- (void) testArrayExample {
-//    NSDictionary *sample =
-//    @{
-//      @"four": @[ @"zero", @"one", @"two", @"three" ],
-//      };
-//    
-//    NSError *error = nil;
-//    NSData *data = [BSONSerialization BSONDataWithDictionary:sample error:&error];
-//    XCTAssertNotNil(data);
-//    XCTAssertNil(error);
-//    
-//    NSDictionary *result = [BSONSerialization dictionaryWithBSONData:data error:&error];
-//    XCTAssertNotNil(result);
-//    XCTAssertNil(error);
-//    
-//    XCTAssertEqualObjects(result, sample);
-//}
-//
-//- (NSDictionary *) serializeAndDeserialize:(NSDictionary *) dictionary {
-//    NSError *error = nil;
-//    NSData *data = [BSONSerialization BSONDataWithDictionary:dictionary error:&error];
-//    if (!data) return nil;
-//    
-//    NSDictionary *result = [BSONSerialization dictionaryWithBSONData:data error:&error];
-//    if (!result) return nil;
-//    
-//    return result;
-//}
-//
-//- (void) testBuiltinTypes {
-//    id original = nil;
-//    id result = nil;
-//    NSError *error = nil;
-//    
-//    original = @"test string";
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//
-//    // +[NSNumber numberWithBool:]
-//    original = @YES;
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"c"); // "c" == char
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) result objCType]], @"c"); // "c" == char
-//
-//    // Core Foundation boolean
-//    original = (id)kCFBooleanTrue;
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"c"); // "c" == char
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) result objCType]], @"c"); // "c" == char
-//    
-//    // +[NSNumber numberWithChar:]
-//    original = [NSNumber numberWithChar:-42];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"c"); // "c" == char
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "i")); // "i" == int
-//
-//    original = [NSNumber numberWithChar:CHAR_MIN];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"c"); // "c" == char
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "i")); // "i" == int
-//
-//    original = [NSNumber numberWithChar:CHAR_MAX];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"c"); // "c" == char
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "i")); // "i" == int
-//
-//    // +[NSNumber numberWithDouble:]
-//    original = [NSNumber numberWithDouble:-42.5];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"d"); // "d" == double
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "d")); // "d" == double
-//
-//    original = [NSNumber numberWithDouble:DBL_MIN];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"d"); // "d" == double
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "d")); // "d" == double
-//
-//    original = [NSNumber numberWithDouble:DBL_MAX];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"d"); // "d" == double
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "d")); // "d" == double
-//
-//    // +[NSNumber numberWithFloat:]
-//    original = [NSNumber numberWithFloat:-42.5];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"f"); // "f" == float
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "d")); // "d" == double
-//
-//    original = [NSNumber numberWithFloat:FLT_MIN];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"f"); // "f" == float
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "d")); // "d" == double
-//
-//    original = [NSNumber numberWithFloat:FLT_MAX];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"f"); // "f" == float
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "d")); // "d" == double
-//
-//    // +[NSNumber numberWithInt:]
-//    original = [NSNumber numberWithInt:-42];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"i"); // "i" == int
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "i")); // "i" == int
-//
-//    original = [NSNumber numberWithInt:INT_MAX];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"i"); // "i" == int
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "i")); // "i" == int
-//
-//    original = [NSNumber numberWithInt:INT_MIN];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"i"); // "i" == int
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "i")); // "i" == int
-//
-//    // +[NSNumber numberWithInteger:]
-//    original = [NSNumber numberWithInteger:42];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"q"); // "q" == long
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "q")); // "q" == long
-//
-//    original = [NSNumber numberWithInteger:NSIntegerMax];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"q"); // "q" == long
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "q")); // "q" == long
-//
-//    original = [NSNumber numberWithInteger:NSIntegerMin];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"q"); // "q" == long
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "q")); // "q" == long
-//
-//    // +[NSNumber numberWithLong:]
-//    original = [NSNumber numberWithLong:42];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"q"); // "q" == long
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "q")); // "q" == long
-//
-//    original = [NSNumber numberWithLong:LONG_MAX];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"q"); // "q" == long
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "q")); // "q" == long
-//
-//    original = [NSNumber numberWithLong:LONG_MIN];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"q"); // "q" == long
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "q")); // "q" == long
-//    
-//    // +[NSNumber numberWithLongLong:]
-//    original = [NSNumber numberWithLongLong:42];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"q"); // "q" == long
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "q")); // "q" == long
-//
-//    original = [NSNumber numberWithLongLong:LONG_LONG_MAX];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"q"); // "q" == long
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "q")); // "q" == long
-//
-//    original = [NSNumber numberWithLongLong:LONG_LONG_MIN];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"q"); // "q" == long
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "q")); // "q" == long
-//
-//    // +[NSNumber numberWithShort:]
-//    original = [NSNumber numberWithShort:42];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"s"); // "s" == short
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "i")); // "i" == int
-//
-//    original = [NSNumber numberWithShort:SHRT_MAX];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"s"); // "s" == short
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "i")); // "i" == int
-//
-//    original = [NSNumber numberWithShort:SHRT_MIN];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"s"); // "s" == short
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "i")); // "i" == int
-//
-//    // +[NSNumber numberWithUnsignedChar:]
-//    original = [NSNumber numberWithUnsignedChar:42];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"s"); // "s" == short
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "i")); // "i" == int
-//    
-//    original = [NSNumber numberWithUnsignedInt:UCHAR_MAX];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"q"); // "q" == long
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "q")); // "q" == long
-//
-//    original = [NSNumber numberWithUnsignedInt:0];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"q"); // "q" == long
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "q")); // "q" == long
-//
-//    // +[NSNumber numberWithUnsignedInt:]
-//    original = [NSNumber numberWithUnsignedInt:-42];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"q"); // "q" == long
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "q")); // "q" == long
-//
-//    original = [NSNumber numberWithUnsignedInt:UINT_MAX];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"q"); // "q" == long
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "q")); // "q" == long
-//
-//    original = [NSNumber numberWithUnsignedInt:0];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"q"); // "q" == long
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "q")); // "q" == long
-//
-//    // +[NSNumber numberWithUnsignedInteger:]
-//    original = [NSNumber numberWithUnsignedInteger:42];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"q"); // "Q" == unsigned long
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "q")); // "q" == long
-//
-//    original = [NSNumber numberWithUnsignedInteger:NSIntegerMax];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"q"); // "q" == unsigned long
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "q")); // "q" == long
-//
-//    original = [NSNumber numberWithUnsignedInteger:NSIntegerMax + 1];
-//    XCTAssertNil([BSONSerialization BSONDataWithDictionary:@{ @"testKey": original } error:&error]);
-//    XCTAssertEqualObjects([error localizedDescription], @"Unsigned integer value overflows BSON signed integer capacity");
-//
-//    original = [NSNumber numberWithUnsignedInteger:0];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"q"); // "q" == long
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "q")); // "q" == long
-//    
-//    // +[NSNumber numberWithUnsignedLong:]
-//    original = [NSNumber numberWithUnsignedLong:42];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"q"); // "Q" == unsigned long
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "q")); // "q" == long
-//
-//    original = [NSNumber numberWithUnsignedLong:LONG_MAX];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"q"); // "Q" == unsigned long
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "q")); // "q" == long
-//    
-//    original = [NSNumber numberWithUnsignedLong:LONG_MAX + 1];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"Q"); // "Q" == unsigned long
-//    XCTAssertNil([BSONSerialization BSONDataWithDictionary:@{ @"testKey": original } error:&error]);
-//    XCTAssertEqualObjects([error localizedDescription], @"Unsigned integer value overflows BSON signed integer capacity");
-//
-//    original = [NSNumber numberWithUnsignedLong:0];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"q"); // "Q" == unsigned long
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "q")); // "q" == long
-//
-//    // +[NSNumber numberWithUnsignedLongLong:]
-//    original = [NSNumber numberWithUnsignedLongLong:42];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"q"); // "Q" == unsigned long
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "q")); // "q" == long
-//
-//    original = [NSNumber numberWithUnsignedLongLong:LONG_LONG_MAX];
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "q")); // "q" == long
-//
-//    original = [NSNumber numberWithUnsignedLongLong:LONG_LONG_MAX+1];
-//    XCTAssertNil([BSONSerialization BSONDataWithDictionary:@{ @"testKey": original } error:&error]);
-//    XCTAssertEqualObjects([error localizedDescription], @"Unsigned integer value overflows BSON signed integer capacity");
-//    
-//    original = [NSNumber numberWithUnsignedLongLong:0];
-//    XCTAssertEqualObjects([NSString stringWithUTF8String:[(NSNumber *) original objCType]], @"q"); // "Q" == unsigned long
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    XCTAssertTrue(0 == strcmp([(NSNumber *) result objCType], "q")); // "q" == long
-//
-//    // +[NSNumber numberWithUnsignedShort:]
-//    original = [NSNumber numberWithUnsignedShort:42];
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    
-//    original = [NSNumber numberWithUnsignedShort:USHRT_MAX];
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//    
-//    original = [NSNumber numberWithUnsignedShort:0];
-//    result = [[self serializeAndDeserialize:@{ @"testKey": original }] objectForKey:@"testKey"];
-//    XCTAssertEqualObjects(result, original);
-//}
-//
-//- (void) testEmbeddedObjectExample {
-//    NSDictionary *sample =
-//    @{
-//      @"four": @{
-//              @"one": @1,
-//              @"two": @(2.0f),
-//              @"three": @"3",
-//              @"five": @YES,
-//              }
-//    };
-//    
-//    NSError *error = nil;
-//    NSData *data = [BSONSerialization BSONDataWithDictionary:sample error:&error];
-//    XCTAssertNotNil(data);
-//    XCTAssertNil(error);
-//    
-//    NSDictionary *result = [BSONSerialization dictionaryWithBSONData:data error:&error];
-//    XCTAssertNotNil(result);
-//    XCTAssertNil(error);
-//    
-//    XCTAssertEqualObjects(result, sample);
-//}
 
 SpecEnd

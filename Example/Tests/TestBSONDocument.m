@@ -215,9 +215,7 @@ describe(@"BSONDocument", ^{
                 dbPointer.collection = @"ponies";
                 dbPointer.objectID = [BSONObjectID objectID];
                 
-                expect(^{
-                    [document appendDatabasePointer:dbPointer forKey:@"testKey"];
-                }).to.raise(@"NSInvalidArgumentException");
+                [document appendDatabasePointer:dbPointer forKey:@"testKey"];
             });
             
         });

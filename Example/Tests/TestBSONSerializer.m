@@ -6,34 +6,42 @@
 //  Copyright (c) 2014 Paul Melnikow. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
 #import "BSONSerializer.h"
 
-@interface TestBSONSerializer : XCTestCase
+SpecBegin(BSONSerialization)
 
-@end
+describe(@"BSONDocument", ^{
+    
+    __block BSONSerializer *serializer = nil;
+    
+    beforeEach(^{
+        serializer = [BSONSerializer serializer];
+    });
+    
+    sharedExamplesFor(@"serialize value", ^(NSDictionary *data) {
+        
+        id value = data[@"value"];
+        
+        it(@"should serialize", ^{
+            
+            NSError *error = nil;
+            BOOL success = [serializer appendObject:value forKey:@"testKey" error:&error];
+            
+            expect(success).to.beTruthy();
+            expect(error).to.beNil();
+            
+        });
+        
+    });
+    
+    itShouldBehaveLike(@"serialize value", @"test string");
+    itShouldBehaveLike(@"serialize value", [NSDate date]);
+    itShouldBehaveLike(@"serialize value", [NSData data]);
+    itShouldBehaveLike(@"serialize value", [NSNumber numberWithBool:YES]);
+    itShouldBehaveLike(@"serialize value", [NSNumber numberWithDouble:2.5]);
+    itShouldBehaveLike(@"serialize value", [NSNumber numberWithInt:42]);
+    itShouldBehaveLike(@"serialize value", [NSNumber numberWithInteger:42]);
+    
+});
 
-@implementation TestBSONSerializer
-
-//- (void) testAppendObject {
-//    BSONSerializer *serializer = [BSONSerializer serializer];
-//    NSError *error = nil;
-//    
-//    XCTAssertTrue([serializer appendObject:@"test string" forKey:@"testKey" error:&error]);
-//    XCTAssertNil(error);
-//    XCTAssertTrue([serializer appendObject:[NSDate date] forKey:@"testKey" error:&error]);
-//    XCTAssertNil(error);
-//    XCTAssertTrue([serializer appendObject:[NSData data] forKey:@"testKey" error:&error]);
-//    XCTAssertNil(error);
-//    
-//    XCTAssertTrue([serializer appendObject:[NSNumber numberWithBool:YES] forKey:@"testKey" error:&error]);
-//    XCTAssertNil(error);
-//    XCTAssertTrue([serializer appendObject:[NSNumber numberWithDouble:2.5] forKey:@"testKey" error:&error]);
-//    XCTAssertNil(error);
-//    XCTAssertTrue([serializer appendObject:[NSNumber numberWithInt:42] forKey:@"testKey" error:&error]);
-//    XCTAssertNil(error);
-//    XCTAssertTrue([serializer appendObject:[NSNumber numberWithInteger:42] forKey:@"testKey" error:&error]);
-//    XCTAssertNil(error);
-//}
-
-@end
+SpecEnd

@@ -4,6 +4,8 @@ source 'https://github.com/CocoaPods/Specs.git'
 target 'ObjCBSON-experimental', :exclusive => true do
   pod "ObjCBSON-experimental", :path => "../"
 
-  pod 'Specta', '~> 0.2.1'
+#  pod 'Specta', '~> 0.2.1'
+  pod 'Specta', :git => 'https://github.com/specta/specta.git', :tag =>
+'v0.3.0.beta1'
   pod 'Expecta'
 end

@@ -3,21 +3,29 @@ PODS:
   - libbson (1.0.2)
   - ObjCBSON-experimental (0.1.0):
     - libbson (~> 1.0.2)
-  - Specta (0.2.1)
+  - Specta (0.3.0.beta1)
 
 DEPENDENCIES:
   - Expecta
   - ObjCBSON-experimental (from `../`)
-  - Specta (~> 0.2.1)
+  - Specta (from `https://github.com/specta/specta.git`, tag `v0.3.0.beta1`)
 
 EXTERNAL SOURCES:
   ObjCBSON-experimental:
     :path: ../
+  Specta:
+    :git: https://github.com/specta/specta.git
+    :tag: v0.3.0.beta1
+
+CHECKOUT OPTIONS:
+  Specta:
+    :git: https://github.com/specta/specta.git
+    :tag: v0.3.0.beta1
 
 SPEC CHECKSUMS:
   Expecta: 03aabd0a89d8dea843baecb19a7fd7466a69a31d
   libbson: 60ee61b1e526970419048be2014ef980e0cbff29
-  ObjCBSON-experimental: f56945dfdd022a6be8ca1e4c9d699d72c15dc2b7
-  Specta: 9141310f46b1f68b676650ff2854e1ed0b74163a
+  ObjCBSON-experimental: 7acbba3dd0b4b93720c528ed6bf15f16649558c9
+  Specta: 63e8ac8e07db6675c7096d37f77a266a1be4c02d
 
 COCOAPODS: 0.35.0
