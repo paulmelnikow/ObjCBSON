@@ -52,11 +52,11 @@
  
  The NSData object is guaranteed to remain valid even if the receiver is deallocated.
  
+ Invoking -dataValue finalizes the document. You can no longer change it.
+ 
  @returns An immutable <code>NSData</code> object pointing to the BSON data buffer.
  */
 - (NSData *) dataValue;
-
-- (NSData *) dataValueNoCopy;
 
 - (instancetype) copy;
 - (void) reinit;

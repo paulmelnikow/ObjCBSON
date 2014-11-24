@@ -16,12 +16,9 @@ Pod::Spec.new do |s|
 
   s.requires_arc = true
 
-  s.source_files = 'Pod/**/*.{h,m}'
-  s.resource_bundles = {
-    'ObjCBSON-experimental' => ['Pod/Assets/*.png']
-  }
+  s.source_files = 'Pod'
+  s.private_header_files = 'Pod/BSON_Helper.h'
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
   s.dependency 'libbson', '~> 1.0.2'
   s.dependency 'OrderedDictionary', '~> 1.2'
 end
