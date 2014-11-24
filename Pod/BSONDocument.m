@@ -167,11 +167,19 @@
     return bson_equal(self._bson, document.nativeValue);
 }
 
++ (const void *) saferBytesForData:(NSData *) data {
+    // Objective-C's zero data ([NSData data]) has bytes == NULL, which
+    // libbson doesn't like. So we swap in this alternate pointer instead.
+    static char emptyData[0];
+    
+    return data.bytes ? data.bytes : emptyData;
+}
+
 - (BOOL) appendData:(NSData *) value forKey:(NSString *) key {
     bson_raise_if_value_is_not_instance_of_class(NSData);
     if (value.length > UINT32_MAX) [NSException raise:NSInvalidArgumentException format:@"Data is too long"];
     bson_raise_if_key_nil_or_too_long();
-    return BSON_APPEND_BINARY(self._bson, key.UTF8String, 0, value.bytes, (uint32_t)value.length);
+    return BSON_APPEND_BINARY(self._bson, key.UTF8String, 0, [self.class saferBytesForData:value], (uint32_t)value.length);
 }
 
 - (BOOL) appendBool:(BOOL) value forKey:(NSString *) key {

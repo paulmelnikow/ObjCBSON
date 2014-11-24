@@ -8,7 +8,7 @@
 
 #import "BSONSerializer.h"
 
-SpecBegin(BSONSerialization)
+SpecBegin(BSONSerializer)
 
 describe(@"BSONDocument", ^{
     
@@ -34,13 +34,13 @@ describe(@"BSONDocument", ^{
         
     });
     
-    itShouldBehaveLike(@"serialize value", @"test string");
-    itShouldBehaveLike(@"serialize value", [NSDate date]);
-    itShouldBehaveLike(@"serialize value", [NSData data]);
-    itShouldBehaveLike(@"serialize value", [NSNumber numberWithBool:YES]);
-    itShouldBehaveLike(@"serialize value", [NSNumber numberWithDouble:2.5]);
-    itShouldBehaveLike(@"serialize value", [NSNumber numberWithInt:42]);
-    itShouldBehaveLike(@"serialize value", [NSNumber numberWithInteger:42]);
+    itShouldBehaveLike(@"serialize value", @{@"value": @"test string"});
+    itShouldBehaveLike(@"serialize value", @{@"value": [NSDate date]});
+    itShouldBehaveLike(@"serialize value", @{@"value": [NSData data]});
+    itShouldBehaveLike(@"serialize value", @{@"value": [NSNumber numberWithBool:YES]});
+    itShouldBehaveLike(@"serialize value", @{@"value": [NSNumber numberWithDouble:2.5]});
+    itShouldBehaveLike(@"serialize value", @{@"value": [NSNumber numberWithInt:42]});
+    itShouldBehaveLike(@"serialize value", @{@"value": [NSNumber numberWithInteger:42]});
     
 });
 
