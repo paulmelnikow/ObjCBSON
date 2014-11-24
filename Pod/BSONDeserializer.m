@@ -15,9 +15,9 @@
 //
 
 #import "BSONDeserializer.h"
-#import "BSON_OrderedDictionary.h"
 #import "BSONDocument.h"
 #import "ObjCBSON.h"
+#import <OrderedDictionary.h>
 
 @interface BSONDocument (Module)
 - (const bson_t *) nativeValue;
@@ -334,7 +334,7 @@ bson_visitor_t visitor_table = {
 - (id) initWithNativeIterator:(bson_iter_t *) iter {
     if (self = [super init]) {
         self._iter = iter;
-        self.dictionary = [BSON_OrderedDictionary dictionary];
+        self.dictionary = [MutableOrderedDictionary dictionary];
     }
     return self;
 }

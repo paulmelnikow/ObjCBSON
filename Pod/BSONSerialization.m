@@ -17,7 +17,6 @@
 #import "BSONSerialization.h"
 #import "BSONSerializer.h"
 #import "BSONDeserializer.h"
-#import "BSON_OrderedDictionary.h"
 #import "BSONTypes.h"
 #import "BSON_Helper.h"
 #import "BSONDocument.h"

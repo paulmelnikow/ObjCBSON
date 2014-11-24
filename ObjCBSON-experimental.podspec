@@ -23,4 +23,5 @@ Pod::Spec.new do |s|
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   s.dependency 'libbson', '~> 1.0.2'
+  s.dependency 'OrderedDictionary', '~> 1.2'
 end

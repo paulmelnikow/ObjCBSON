@@ -15,9 +15,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <OrderedDictionary.h>
 #import "bson.h"
-
-@class BSON_OrderedDictionary;
 
 /**
  Private class to handle document serialization
@@ -32,7 +31,7 @@
 - (void) markCorrupt;
 - (void) start;
 
-@property (strong) BSON_OrderedDictionary *dictionary;
+@property (strong) MutableOrderedDictionary *dictionary;
 @property (assign) BOOL corrupt;
 @property (strong) NSError *error;
 
