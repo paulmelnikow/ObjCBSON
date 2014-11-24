@@ -260,22 +260,22 @@ describe(@"BSONSerialization", ^{
         itShouldBehaveLike(@"serializes and deserializes number",
             @{
                 @"number": [NSNumber numberWithInteger:42],
-                @"inType": @"i",
-                @"outType": @"i",
+                @"inType": @"q", // "q" == long
+                @"outType": @"q",
             });
 
         itShouldBehaveLike(@"serializes and deserializes number",
             @{
                 @"number": [NSNumber numberWithInteger:NSIntegerMax],
-                @"inType": @"i",
-                @"outType": @"i",
+                @"inType": @"q", // "q" == long
+                @"outType": @"q",
             });
 
         itShouldBehaveLike(@"serializes and deserializes number",
             @{
                 @"number": [NSNumber numberWithInteger:NSIntegerMin],
-                @"inType": @"i", // "q" == long
-                @"outType": @"i",
+                @"inType": @"q", // "q" == long
+                @"outType": @"q",
             });
         
     });
@@ -285,22 +285,22 @@ describe(@"BSONSerialization", ^{
         itShouldBehaveLike(@"serializes and deserializes number",
             @{
                 @"number": [NSNumber numberWithLong:42],
-                @"inType": @"i",
-                @"outType": @"i",
+                @"inType": @"q", // "q" == long
+                @"outType": @"q",
             });
 
         itShouldBehaveLike(@"serializes and deserializes number",
             @{
                 @"number": [NSNumber numberWithLong:LONG_MAX],
-                @"inType": @"i",
-                @"outType": @"i",
+                @"inType": @"q", // "q" == long
+                @"outType": @"q",
             });
 
         itShouldBehaveLike(@"serializes and deserializes number",
             @{
                 @"number": [NSNumber numberWithLong:LONG_MIN],
-                @"inType": @"i",
-                @"outType": @"i",
+                @"inType": @"q", // "q" == long
+                @"outType": @"q",
             });
     
     });
@@ -374,7 +374,7 @@ describe(@"BSONSerialization", ^{
         itShouldBehaveLike(@"serializes and deserializes number",
             @{
                 @"number": [NSNumber numberWithUnsignedChar:0],
-                @"inType": @"i", // for whatever reason...
+                @"inType": @"s", // "s" == short
                 @"outType": @"i",
             });
     
@@ -393,14 +393,14 @@ describe(@"BSONSerialization", ^{
             @{
                 @"number": [NSNumber numberWithUnsignedInt:UINT_MAX],
                 @"inType": @"q", // "q" == long
-                @"outType": @"i",
+                @"outType": @"q",
             });
 
         itShouldBehaveLike(@"serializes and deserializes number",
             @{
                 @"number": [NSNumber numberWithUnsignedInt:0],
-                @"inType": @"i",
-                @"outType": @"i",
+                @"inType": @"q", // "q" == long
+                @"outType": @"q",
             });
         
     });
@@ -442,8 +442,8 @@ describe(@"BSONSerialization", ^{
         itShouldBehaveLike(@"serializes and deserializes number",
             @{
                 @"number": [NSNumber numberWithUnsignedInteger:0],
-                @"inType": @"i",
-                @"outType": @"i",
+                @"inType": @"q", // "s" == long
+                @"outType": @"q",
             });
         
         itShouldBehaveLike(@"overflow BSON signed capacity",
@@ -472,8 +472,8 @@ describe(@"BSONSerialization", ^{
         itShouldBehaveLike(@"serializes and deserializes number",
             @{
                 @"number": [NSNumber numberWithUnsignedLong:0],
-                @"inType": @"i",
-                @"outType": @"i",
+                @"inType": @"q", // "s" == long
+                @"outType": @"q",
             });
         
         itShouldBehaveLike(@"overflow BSON signed capacity",
@@ -496,14 +496,14 @@ describe(@"BSONSerialization", ^{
             @{
                 @"number": [NSNumber numberWithUnsignedLongLong:LONG_LONG_MAX],
                 @"inType": @"q", // "s" == long
-                @"outType": @"i",
+                @"outType": @"q",
             });
 
         itShouldBehaveLike(@"serializes and deserializes number",
             @{
                 @"number": [NSNumber numberWithUnsignedLongLong:0],
-                @"inType": @"i", // "s" == long
-                @"outType": @"i",
+                @"inType": @"q", // "s" == long
+                @"outType": @"q",
             });
         
         itShouldBehaveLike(@"overflow BSON signed capacity",
