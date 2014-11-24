@@ -4,9 +4,9 @@
 
 language: objective-c
 before_install:
-- gem install cocoapods
+- gem install cocoapods --no-rdoc --no-ri --no-document --quiet
 - (cd Example && pod install)
 install:
 - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
 script:
-- set -o pipefail && xcodebuild test -workspace Example/ObjCBSON-experimental.xcworkspace -scheme ObjCBSON-experimental -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO | xcpretty -c
+- rake test
