@@ -5,7 +5,7 @@
 language: objective-c
 before_install:
 - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
-- (cd Example && pod install)
+- pod install --project-directory=Example
 install:
 - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
 script:
