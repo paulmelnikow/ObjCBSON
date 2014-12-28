@@ -17,8 +17,6 @@
 #import "ObjCBSON.h"
 
 NSString * const BSONErrorDomain = @"BSONErrorDomain";
-//NSInteger const BSONKeyNameErrorStartsWithDollar = 101;
-//NSInteger const BSONKeyNameErrorHasDot = 102;
 NSInteger const BSONDocumentOverflow = -1;
 NSInteger const BSONIntegerOverflow = -2;
 NSInteger const BSONIsCorrupt = -3;
