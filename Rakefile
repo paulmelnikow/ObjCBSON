@@ -3,10 +3,10 @@ task :install do
 end
 
 task :test do
-  raise unless system "bash -c 'set -o pipefail && xcodebuild test -workspace Example/ObjCBSON-experimental.xcworkspace -scheme ObjCBSON-experimental -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO | xcpretty -c'"
+  raise unless system "bash -c 'set -o pipefail && xcodebuild test -workspace Example/ObjCBSON.xcworkspace -scheme ObjCBSON -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO | xcpretty -c'"
 end
 
 task :clean do
-  raise unless system "xcodebuild clean -workspace Example/ObjCBSON-experimental.xcworkspace -scheme ObjCBSON-experimental"
+  raise unless system "xcodebuild clean -workspace Example/ObjCBSON.xcworkspace -scheme ObjCBSON"
 end
 
