@@ -153,9 +153,9 @@
     bson_raise_if_key_nil_or_too_long();
     const char *utf8 = [key UTF8String];
 
-    bson_t child;
-    bson_append_array_begin(self.nativeValue, utf8, (int)strlen(utf8), &child);
-    BSONSerializer *childSerializer = [BSONSerializer serializerWithNativeDocument:&child];
+    bson_t *child = bson_new();
+    bson_append_array_begin(self.nativeValue, utf8, (int)strlen(utf8), child);
+    BSONSerializer *childSerializer = [BSONSerializer serializerWithNativeDocument:child];
     
     BOOL success = YES;
     for (NSUInteger i = 0; i < array.count; ++i) {
@@ -167,7 +167,7 @@
         }
     }
     
-    bson_append_array_end(self.nativeValue, &child);
+    bson_append_array_end(self.nativeValue, child);
     return success;
 }
 
