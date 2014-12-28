@@ -18,9 +18,21 @@
 
 @class BSONDocument;
 
+/**
+ Convenience class to serialize and deserialize BSON.
+ */
 @interface BSONSerialization : NSObject
 
+/**
+ Deserialize BSON data to native Objective-C types and various types
+ defined in BSONTypes.h.
+ */
 + (NSDictionary *) dictionaryWithBSONData:(NSData *) data error:(NSError **) error;
+
+/**
+ Serialize an Objective-C dictionary to BSON. Supports NSString,
+ NSNumber, NSDate, NSNull, and various types defined in BSONTypes.h.
+ */
 + (NSData *) BSONDataWithDictionary:(NSDictionary *) dictionary error:(NSError **) error;
 
 @end
