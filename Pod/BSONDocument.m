@@ -159,11 +159,15 @@
 }
 
 - (NSComparisonResult) compare:(BSONDocument *) other {
-    return bson_NSComparisonResultFromQsort(bson_compare(self._bson, other.nativeValue));
+    if (![other isKindOfClass:[self class]]) return NSOrderedDescending;
+    
+    int result = bson_compare(self._bson, other.nativeValue);
+    return bson_NSComparisonResultFromQsort(result);
 }
 
 - (BOOL) isEqual:(BSONDocument *) document {
     if (![document isKindOfClass:[self class]]) return NO;
+    
     return bson_equal(self._bson, document.nativeValue);
 }
 
