@@ -140,6 +140,10 @@
     return NSStringWithJSONFromBSON(self._bson);
 }
 
+- (NSDictionary *) dictionaryValueWithError:(NSError **) error {
+    return [BSONSerialization dictionaryWithDocument:self error:error];
+}
+
 #pragma mark -
 
 + (NSUInteger) maximumCapacity {

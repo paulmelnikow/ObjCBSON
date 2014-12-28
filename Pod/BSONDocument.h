@@ -58,6 +58,11 @@
  */
 - (NSData *) dataValue;
 
+/**
+ Returns a deserialized dictionary for this document.
+ */
+- (NSDictionary *) dictionaryValueWithError:(NSError **) error;
+
 - (instancetype) copy;
 
 - (BOOL) isEmpty;
