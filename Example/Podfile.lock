@@ -1,7 +1,7 @@
 PODS:
   - Expecta (0.3.1)
   - libbson (1.0.2)
-  - ObjCBSON (0.1.0):
+  - ObjCBSON (1.0.0-dev):
     - libbson (~> 1.0.2)
     - OrderedDictionary (~> 1.2)
   - OrderedDictionary (1.2)
@@ -27,7 +27,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Expecta: 03aabd0a89d8dea843baecb19a7fd7466a69a31d
   libbson: 60ee61b1e526970419048be2014ef980e0cbff29
-  ObjCBSON: 351d08c3ea978ac5cc049d85d9c8b4a7aec60564
+  ObjCBSON: 62cfdd0a9ecedf57b483b5d80626a7cec9df55a3
   OrderedDictionary: f7dffc6f0b866461964952a66ed8497d15cf2028
   Specta: 63e8ac8e07db6675c7096d37f77a266a1be4c02d
 
