@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "ObjCBSON"
-  s.version          = "0.1.0"
+  s.version          = "1.0.0-dev"
   s.summary          = "High-performance BSON serialization and deserialization in Objective-C"
   s.description      = <<-DESC
                        NSError **error = nil;
