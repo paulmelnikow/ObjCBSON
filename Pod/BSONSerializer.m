@@ -17,7 +17,7 @@
 #import "BSONSerializer.h"
 #import "ObjCBSON.h"
 #import "BSONDocument.h"
-#import "BSON_Helper.h"
+#import "ObjCBSON-private.h"
 
 @interface BSONDocument (Module)
 - (const bson_t *) nativeValue;

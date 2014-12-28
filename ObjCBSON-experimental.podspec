@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.source_files = 'Pod'
-  s.private_header_files = 'Pod/BSON_Helper.h'
+  s.private_header_files = 'Pod/*-private.h'
 
   s.dependency 'libbson', '~> 1.0.2'
   s.dependency 'OrderedDictionary', '~> 1.2'

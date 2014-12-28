@@ -18,7 +18,7 @@
 #import "BSONSerializer.h"
 #import "BSONDeserializer.h"
 #import "BSONTypes.h"
-#import "BSON_Helper.h"
+#import "ObjCBSON-private.h"
 #import "BSONDocument.h"
 #import "ObjCBSON.h"
 #import <bson.h>

@@ -15,7 +15,7 @@
 //
 
 #import "BSONTypes.h"
-#import "BSON_Helper.h"
+#import "ObjCBSON-private.h"
 #import "bson.h"
 
 
