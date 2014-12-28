@@ -20,17 +20,43 @@
 @class BSONDocument;
 
 /**
- Private class to handle document serialization
+ Private class to handle document serialization. Offers a simpler,
+ higher level interface compared to using BSONDocument directly.
  */
 @interface BSONSerializer : NSObject
 
+/**
+ Create a new serializer with an empty document.
+ */
 + (instancetype) serializer;
+
+/**
+ Create a new serializer with a new document, taking ownership of
+ the given bson_t.
+ 
+ Note the bson_t should be heap-allocated.
+ */
 + (instancetype) serializerWithNativeDocument:(bson_t *) nativeDocument;
 
+/**
+ Access the underlying bson_t, which remains owned by the receiver.
+ */
 - (bson_t *) nativeValue;
+
+/**
+ Append the given value to the receiver's document.
+ */
 - (BOOL) appendObject:(id) value forKey:(NSString *) key error:(NSError **) error;
+
+/**
+ Append all the values from the given dictionary to the receiver's
+ document. Stops serializing on the first error.
+ */
 - (BOOL) serializeDictionary:(NSDictionary *) dictionary error:(NSError **) error;
 
+/**
+ Access the receiver's document.
+ */
 @property (strong) BSONDocument *document;
 
 @end
