@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6003F5AD195388D20070C39A"
-               BuildableName = "ObjCBSON-experimental.xctest"
-               BlueprintName = "ObjCBSON-experimental"
-               ReferencedContainer = "container:ObjCBSON-experimental.xcodeproj">
+               BuildableName = "ObjCBSON.xctest"
+               BlueprintName = "ObjCBSON"
+               ReferencedContainer = "container:ObjCBSON.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6003F5AD195388D20070C39A"
-               BuildableName = "ObjCBSON-experimental.xctest"
-               BlueprintName = "ObjCBSON-experimental"
-               ReferencedContainer = "container:ObjCBSON-experimental.xcodeproj">
+               BuildableName = "ObjCBSON.xctest"
+               BlueprintName = "ObjCBSON"
+               ReferencedContainer = "container:ObjCBSON.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -43,9 +43,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6003F5AD195388D20070C39A"
-            BuildableName = "ObjCBSON-experimental.xctest"
-            BlueprintName = "ObjCBSON-experimental"
-            ReferencedContainer = "container:ObjCBSON-experimental.xcodeproj">
+            BuildableName = "ObjCBSON.xctest"
+            BlueprintName = "ObjCBSON"
+            ReferencedContainer = "container:ObjCBSON.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6003F5AD195388D20070C39A"
-            BuildableName = "ObjCBSON-experimental.xctest"
-            BlueprintName = "ObjCBSON-experimental"
-            ReferencedContainer = "container:ObjCBSON-experimental.xcodeproj">
+            BuildableName = "ObjCBSON.xctest"
+            BlueprintName = "ObjCBSON"
+            ReferencedContainer = "container:ObjCBSON.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -80,9 +80,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6003F5AD195388D20070C39A"
-            BuildableName = "ObjCBSON-experimental.xctest"
-            BlueprintName = "ObjCBSON-experimental"
-            ReferencedContainer = "container:ObjCBSON-experimental.xcodeproj">
+            BuildableName = "ObjCBSON.xctest"
+            BlueprintName = "ObjCBSON"
+            ReferencedContainer = "container:ObjCBSON.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
