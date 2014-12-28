@@ -121,18 +121,6 @@
     return [[self.class alloc] initWithNativeValue:bson];
 }
 
-- (void) reinit {
-    if (self.inData) {
-        // If this was initialized using static data, just clean up and
-        // then create a new object.
-        self.inData = nil;
-        bson_destroy(self._bson);
-        self._bson = bson_new();
-    } else {
-        bson_reinit(self._bson);
-    }
-}
-
 #pragma mark -
 
 - (const bson_t *) nativeValue {

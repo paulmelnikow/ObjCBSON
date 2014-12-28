@@ -59,7 +59,6 @@
 - (NSData *) dataValue;
 
 - (instancetype) copy;
-- (void) reinit;
 
 - (BOOL) isEmpty;
 - (BOOL) hasField:(NSString *) key;
