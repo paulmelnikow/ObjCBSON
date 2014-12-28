@@ -43,8 +43,8 @@ from the Example directory, and open the xcworkspace.
 Contribute
 ----------
 
-Issue Tracker: github.com/paulmelnikow/ObjCBSON/issues
-Source Code: github.com/paulmelnikow/ObjCBSON
+- Issue Tracker: github.com/paulmelnikow/ObjCBSON/issues
+- Source Code: github.com/paulmelnikow/ObjCBSON
 
 
 License
