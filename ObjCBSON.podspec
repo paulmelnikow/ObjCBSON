@@ -1,3 +1,20 @@
+#
+# IMPORTANT
+#
+# This development branch depends on an unreleased development version of
+# libbson.
+#
+# CocoaPods does not allow pods to depend on pods from git, so you need
+# to pull them in from your Podfile instead:
+#
+# pod 'ObjCBSON', :git => 'https://github.com/paulmelnikow/ObjCBSON'
+# pod 'libbson', :git => 'https://github.com/paulmelnikow/libbson', :branch => 'podspec-1'
+#
+# Use the libbson fork since the 10gen repositories does not contain
+# podspecs at this time. Note these forks are unstable and are for
+# development purposes only.
+#
+
 Pod::Spec.new do |s|
   s.name             = "ObjCBSON"
   s.version          = "1.0.0-dev"
@@ -20,6 +37,6 @@ Pod::Spec.new do |s|
   s.source_files = 'Pod'
   s.private_header_files = 'Pod/*-private.h'
 
-  s.dependency 'libbson', '~> 1.0.2'
+#  s.dependency 'libbson', '~> 1.0.2'
   s.dependency 'OrderedDictionary', '~> 1.2'
 end
