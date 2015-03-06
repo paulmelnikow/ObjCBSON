@@ -13,7 +13,7 @@ High-performance BSON serialization and deserialization in Objective-C.
 Installation
 ------------
 
-ObjCBSON-experimental is available through [CocoaPods](http://cocoapods.org). To install
+ObjCBSON is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```rb
