@@ -3,18 +3,18 @@
 set -o pipefail
 
 gem install xcpretty
-gem install cocoapods --pre
+gem install cocoapods
 
 pod --version
 
 (
-	cd Example
+	cd ObjCBSONSampleApp
 	pod install
-	xcodebuild test -workspace ObjCBSON.xcworkspace -scheme ObjCBSON-Example ONLY_ACTIVE_ARCH=NO | xcpretty -c
+	xcodebuild -workspace ObjCBSONSampleApp.xcworkspace -scheme ObjCBSONSampleApp -sdk iphonesimulator VALID_ARCHS="armv6 armv7 i386" ONLY_ACTIVE_ARCH=NO | xcpretty -c
 )
 
 (
-	cd ObjCBSONSampleApp
+	cd Example
 	pod install
-	xcodebuild -workspace ObjCBSONSampleApp.xcworkspace -scheme ObjCBSONSampleApp ONLY_ACTIVE_ARCH=NO | xcpretty -c
+	xcodebuild test -workspace ObjCBSON.xcworkspace -scheme ObjCBSON-Example -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO VALID_ARCHS="armv6 armv7 i386" | xcpretty -c
 )
