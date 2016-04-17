@@ -1,10 +1,2 @@
-# origin: https://github.com/paulmelnikow/pod-template-rake
-#
-# references:
-# * http://www.objc.io/issue-6/travis-ci.html
-
 language: objective-c
-# cache: cocoapods
-# podfile: Example/Podfile
-install: rake install_for_ci
-script: rake test
+script: ./build.sh
