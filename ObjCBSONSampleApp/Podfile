@@ -1,0 +1,18 @@
+use_frameworks!
+platform :ios, '8.0'
+
+def mypods
+  pod 'ObjCBSON'
+end
+
+target 'ObjCBSONSampleApp' do
+  mypods
+end
+
+target :ObjCBSONSampleAppTests do
+  mypods
+end
+
+target 'ObjCBSONSampleAppUITests' do
+  mypods
+end
