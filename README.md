@@ -25,13 +25,22 @@ Example
 -------
 
 ```objc
-NSError **error = nil;
-NSDictionary *doc = [BSONSerialization dictionaryWithBSONData:data error:error];
+#import "ObjCBSON/BSONSerialization.h"
 
-NSError **error = nil;
-NSData *data = [BSONSerialization BSONDataWithDictionary:dictionary error:error];
+
+- (void) bsonExample {
+    NSError *error = nil;
+
+    // BSON encode dictionary `sampleDict` to `NSData *` instance `bsonEncodedData`
+    NSDictionary *sampleDict = @{ @"sampleKey" : @"sampleValue" };
+    NSData *bsonEncodedData = [BSONSerialization BSONDataWithDictionary:sampleDict error:&error];
+    NSLog(@"bsonEncodedData=%@ error=%@", bsonEncodedData, [error localizedDescription]);
+
+    // ...end perform decording from BSON back to `NSDictionary *`
+    NSDictionary *bsonDict = [BSONSerialization dictionaryWithBSONData:bsonEncodedData error:&error];
+    NSLog(@"bsonDict=%@, error=%@", bsonDict, [error localizedDescription]);
+}
 ```
-
 
 Development
 -----------
@@ -43,8 +52,8 @@ from the Example directory, and open the xcworkspace.
 Contribute
 ----------
 
-- Issue Tracker: github.com/paulmelnikow/ObjCBSON/issues
-- Source Code: github.com/paulmelnikow/ObjCBSON
+- Issue Tracker: https://github.com/paulmelnikow/ObjCBSON/issues
+- Source Code: https://github.com/paulmelnikow/ObjCBSON
 
 
 License
