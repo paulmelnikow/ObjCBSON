@@ -8,3 +8,7 @@ language: objective-c
 # podfile: Example/Podfile
 install: rake install_for_ci
 script: rake test
+
+notifications:
+  slack:
+    secure: L60jPEUeOW1Uimwmn6SImasEaFBdsGSqoPEZsamm9poukhBL3FVqtPRmCc8WMCCTvWtr6yRS0N+CnoClPsK3nL9q/ou0jh7OFcQ5Qgkfu5DNYvnoV9/7Yy0izcj9F2ZHVjuLF/R0OXmcuxmjsh3PRMqzSH9FNe6iiSDDOSSXpCA=
