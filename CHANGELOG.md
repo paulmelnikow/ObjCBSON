@@ -1,5 +1,5 @@
-ObjCBSON Release History
-========================
+ObjCBSON Changelog
+==================
 
 0.2.0
 -----
