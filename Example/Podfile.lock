@@ -1,0 +1,28 @@
+PODS:
+  - Expecta (1.0.5)
+  - libbson (1.6.1-cocoapods-rc1)
+  - ObjCBSON (0.2.0):
+    - libbson (= 1.6.1-cocoapods-rc1)
+    - OrderedDictionary (~> 1.2)
+  - OrderedDictionary (1.4)
+  - Specta (1.0.6)
+
+DEPENDENCIES:
+  - Expecta
+  - ObjCBSON (from `../`)
+  - Specta
+
+EXTERNAL SOURCES:
+  ObjCBSON:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
+  libbson: 799c23f243914c116c6ddf4cf38ba8c255501f39
+  ObjCBSON: e5e8a04bb1989c77e86fbf8962948e3320ac9298
+  OrderedDictionary: 138c8d2e358d3a0c9adda15c6c7db24e8e3b09e6
+  Specta: f506f3a8361de16bc0dcf3b17b75e269072ba465
+
+PODFILE CHECKSUM: 42295aaac0c8d636e533542877ca7dc7aa945585
+
+COCOAPODS: 1.2.0

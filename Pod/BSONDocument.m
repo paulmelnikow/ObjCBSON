@@ -18,7 +18,7 @@
 #import "ObjCBSON-private.h"
 #import "BSONSerialization.h"
 #import "ObjCBSON.h"
-#import <bson.h>
+#import <bson/bson.h>
 
 
 @interface BSONDocument ()

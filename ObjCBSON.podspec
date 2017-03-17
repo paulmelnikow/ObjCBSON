@@ -20,6 +20,6 @@ Pod::Spec.new do |s|
   s.source_files = 'Pod'
   s.private_header_files = 'Pod/*-private.h'
 
-  s.dependency 'libbson', '~> 1.1.0'
+  s.dependency 'libbson', '1.6.1-cocoapods-rc1'
   s.dependency 'OrderedDictionary', '~> 1.2'
 end

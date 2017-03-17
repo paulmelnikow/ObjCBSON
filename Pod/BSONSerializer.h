@@ -15,7 +15,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "bson.h"
+#import <bson/bson.h>
 
 @class BSONDocument;
 
