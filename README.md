@@ -13,12 +13,23 @@ High-performance BSON serialization and deserialization in Objective-C.
 Installation
 ------------
 
-ObjCBSON is available through [CocoaPods](http://cocoapods.org). To install
-it, simply add the following line to your Podfile:
+ObjCBSON is available through [CocoaPods][]. It depends on [libbson][], which
+is installed automatically, however two of its build dependences are not.
+
+First, install those:
+
+```sh
+brew install automake libtool
+```
+
+Then, add the following line to your Podfile:
 
 ```rb
 pod 'ObjCBSON'
 ```
+
+[cocoapods]: http://cocoapods.org/pods/ObjCBSON
+[libbson]: http://cocoapods.org/pods/libbson
 
 
 Example
