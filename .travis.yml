@@ -2,32 +2,15 @@ language: objective-c
 osx_image: xcode8.2
 
 before_install:
-  # Use when Travis-installed ruby won't run latest cocoapods.
-  # - rvm get stable --auto-dotfiles
-  # - rvm install 2.2
+  - test $CI && curl -sSL https://raw.githubusercontent.com/paulmelnikow/simon-says/master/simon-says -o simon-says && chmod +x simon-says
+  - ./simon-says prepare
+  - ./simon-says appledoc install
 
-  - gem install xcpretty
-
-  - gem install cocoapods
-  - pod --version
-  - pod repo update
-
+before_script:
   - (cd Example && pod install)
 
-  # https://github.com/travis-ci/travis-ci/issues/7031
-  - echo y | fastlane snapshot reset_simulators
-
-
 script:
-  - set -o pipefail &&
-    xcodebuild
-    test
-    -destination 'platform=iOS Simulator,name=iPhone 7 Plus,OS=10.2'
-    -workspace Example/ObjCBSON.xcworkspace
-    -scheme ObjCBSON-Example
-    -sdk iphonesimulator10.2
-    ONLY_ACTIVE_ARCH=NO |
-    xcpretty -c
+  - ./simon-says test Example/ObjCBSON.xcworkspace ObjCBSON-Example "platform=iOS Simulator,name=iPhone 7 Plus,OS=10.2"
 
 notifications:
   slack:
