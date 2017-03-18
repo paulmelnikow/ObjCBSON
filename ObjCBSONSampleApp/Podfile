@@ -2,7 +2,8 @@ use_frameworks!
 platform :ios, '8.0'
 
 def mypods
-  pod 'ObjCBSON'
+  # pod 'ObjCBSON'
+  pod 'ObjCBSON', :git => 'https://github.com/paulmelnikow/ObjCBSON.git', :branch => 'master'
 end
 
 target 'ObjCBSONSampleApp' do

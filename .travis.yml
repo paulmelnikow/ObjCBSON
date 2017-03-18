@@ -8,9 +8,11 @@ before_install:
 
 before_script:
   - (cd Example && pod install)
+  - (cd ObjCBSONSampleApp && pod install)
 
 script:
   - ./simon-says test Example/ObjCBSON.xcworkspace ObjCBSON-Example "platform=iOS Simulator,name=iPhone 7 Plus,OS=10.2"
+  - ./simon-says test ObjCBSONSampleApp/ObjCBSONSampleApp.xcworkspace ObjCBSONSampleApp "platform=iOS Simulator,name=iPhone 7 Plus,OS=10.2"
 
 notifications:
   slack:

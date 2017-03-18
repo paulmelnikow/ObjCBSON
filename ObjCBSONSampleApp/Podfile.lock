@@ -1,0 +1,28 @@
+PODS:
+  - libbson (1.6.1-cocoapods-rc1)
+  - ObjCBSON (0.2.0):
+    - libbson (= 1.6.1-cocoapods-rc1)
+    - OrderedDictionary (~> 1.2)
+  - OrderedDictionary (1.4)
+
+DEPENDENCIES:
+  - ObjCBSON (from `https://github.com/paulmelnikow/ObjCBSON.git`, branch `sample_project`)
+
+EXTERNAL SOURCES:
+  ObjCBSON:
+    :branch: sample_project
+    :git: https://github.com/paulmelnikow/ObjCBSON.git
+
+CHECKOUT OPTIONS:
+  ObjCBSON:
+    :commit: 2f59ff020babb9a5a93ded6ac4ff00c95ea8eeab
+    :git: https://github.com/paulmelnikow/ObjCBSON.git
+
+SPEC CHECKSUMS:
+  libbson: 799c23f243914c116c6ddf4cf38ba8c255501f39
+  ObjCBSON: e5e8a04bb1989c77e86fbf8962948e3320ac9298
+  OrderedDictionary: 138c8d2e358d3a0c9adda15c6c7db24e8e3b09e6
+
+PODFILE CHECKSUM: 2277017afd7868632210fb91c4945947eb0a0373
+
+COCOAPODS: 1.2.0

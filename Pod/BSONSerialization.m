@@ -21,7 +21,7 @@
 #import "ObjCBSON-private.h"
 #import "BSONDocument.h"
 #import "ObjCBSON.h"
-#import <bson/bson.h>
+#import "bson.h"
 
 #pragma mark - Module interfaces
 

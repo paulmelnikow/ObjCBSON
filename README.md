@@ -36,7 +36,7 @@ Example
 -------
 
 ```objc
-#import "ObjCBSON/BSONSerialization.h"
+#import "BSONSerialization.h"
 
 
 - (void) bsonExample {

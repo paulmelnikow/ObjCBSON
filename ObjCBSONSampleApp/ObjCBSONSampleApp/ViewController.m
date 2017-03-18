@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "ObjCBSON/BSONSerialization.h"
+#import "BSONSerialization.h"
 
 @interface ViewController ()
 

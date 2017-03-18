@@ -17,7 +17,7 @@
 #import "BSONDeserializer.h"
 #import "BSONDocument.h"
 #import "ObjCBSON.h"
-#import <OrderedDictionary.h>
+#import "OrderedDictionary.h"
 
 @interface BSONDocument (Module)
 - (const bson_t *) nativeValue;
