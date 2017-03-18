@@ -14,4 +14,5 @@ script:
 
 notifications:
   slack:
-    secure: L60jPEUeOW1Uimwmn6SImasEaFBdsGSqoPEZsamm9poukhBL3FVqtPRmCc8WMCCTvWtr6yRS0N+CnoClPsK3nL9q/ou0jh7OFcQ5Qgkfu5DNYvnoV9/7Yy0izcj9F2ZHVjuLF/R0OXmcuxmjsh3PRMqzSH9FNe6iiSDDOSSXpCA=
+    on_success: change
+    secure: UI+a3Du2owOLjuWUnXV+3xN/XU5Sx1Qn2lkTz1jzexZtaYTD0kJYowBEgLMlHcXmeqVuiY1yK4F8ZFr5OkX+BpKSWIeAzCc6gO2SAHEER07XSfAKJb07+euJ2iAMqZt8prGkpBHEz2PVLFfst+xN8TCoNRUjkoFcA4oCGRZqfIo=
