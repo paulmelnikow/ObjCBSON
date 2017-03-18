@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "ObjCBSON"
-  s.version          = "0.2.0"
+  s.version          = "0.2.1"
   s.summary          = "High-performance BSON serialization and deserialization in Objective-C"
   s.description      = "High-performance BSON serialization and deserialization in Objective-C"
   s.homepage         = "https://github.com/paulmelnikow/ObjCBSON"
